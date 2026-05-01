@@ -2,16 +2,16 @@ import Link from "next/link";
 
 export default function Header() {
     return (
-        <header className="custom-header">
+        <header className="w-full fixed bg-blue-500 p-2 top-0">
             <div className="custom-header-container">
-                <nav className="custom-nav">
-                    <Link href="/" className="custom-nav-link">
+                <nav className="flex gap-x-6">
+                    <Link href="/" className="text-2xl text-white">
                         Все имущество
                     </Link>
-                    <Link href="/users" className="custom-nav-link">
+                    <Link href="/users" className="text-2xl text-white">
                         Пользователи
                     </Link>
-                    <Link href="/currencies" className="custom-nav-link">
+                    <Link href="/currencies" className="text-2xl text-white">
                         Валюта
                     </Link>
                 </nav>

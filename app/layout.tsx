@@ -22,7 +22,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn("antialiased", fontSans.variable, "font-mono", jetbrainsMono.variable)}
     >
-      <body>
+      <body className="pt-6">
         <Header />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
