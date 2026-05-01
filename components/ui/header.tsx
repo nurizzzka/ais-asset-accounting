@@ -8,9 +8,19 @@ export default function Header() {
                     <Link href="/" className="text-2xl text-white">
                         Все имущество
                     </Link>
+                    <Link href="/receipts" className="text-2xl text-white">
+                        Поступления
+                    </Link>
+                    <Link href="/writeoffs" className="text-2xl text-white">
+                        Списания
+                    </Link>
+                    <Link href="/suppliers" className="text-2xl text-white">
+                        Поставщики
+                    </Link>
                     <Link href="/users" className="text-2xl text-white">
                         Пользователи
                     </Link>
+                    
                     <Link href="/currencies" className="text-2xl text-white">
                         Валюта
                     </Link>

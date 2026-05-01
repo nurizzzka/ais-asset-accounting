@@ -11,9 +11,9 @@ import {
 export default async function Products() {
   const products = await prisma.products.findMany()
   return (
-    <div className="py-4 px-2">
+    <div className="px-2 py-4">
       <h1 className="text-2xl">Список имущества</h1>
-      <Table>
+      <Table className="w-fit">
         <TableHeader className="bg-blue-300">
           <TableRow>
             <TableHead>ID</TableHead>

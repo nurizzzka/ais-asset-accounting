@@ -11,7 +11,7 @@ import {
 export default async function Currencies() {
   const currencies = await prisma.currencies.findMany()
   return (
-    <div className="py-4 px-2">
+    <div className="px-2 py-4">
       <h1 className="text-2xl">Список валют</h1>
       <Table className="w-fit">
         <TableHeader className="bg-blue-300">

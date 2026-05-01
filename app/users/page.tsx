@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge"
 export default async function Users() {
   const users = await prisma.users.findMany()
   return (
-    <div className="py-4 px-2">
+    <div className="px-2 py-4">
       <h1 className="text-2xl">Список пользователей</h1>
       <Table className="w-fit">
         <TableHeader className="bg-blue-300">
@@ -49,7 +49,9 @@ export default async function Users() {
                 </TableCell>
                 <TableCell>
                   {user.is_active ? (
-                    <Badge variant="default">Активен</Badge>
+                    <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+                      Активен
+                    </Badge>
                   ) : (
                     <Badge variant="destructive">Заблокирован</Badge>
                   )}
