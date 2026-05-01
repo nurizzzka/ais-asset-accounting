@@ -1,17 +1,38 @@
-import { prisma } from "@/lib/db";
+import { prisma } from "@/lib/db"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export default async function Currencies() {
-    const currencies = await prisma.currencies.findMany();
-    return (
-        <div>
-            <h1>Валюта</h1>
-            <div>
-                {currencies.map((currency) => (
-                    <div key={currency.id}>
-                        {currency.name}
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+  const currencies = await prisma.currencies.findMany()
+  return (
+    <div className="py-4 px-2">
+      <h1 className="text-2xl">Список валют</h1>
+      <Table className="w-fit">
+        <TableHeader className="bg-blue-300">
+          <TableRow>
+            <TableHead>Код</TableHead>
+            <TableHead>Символ</TableHead>
+            <TableHead>Название</TableHead>
+            <TableHead className="text-right">Действия</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {currencies.map((currency) => (
+            <TableRow key={currency.id}>
+              <TableCell>{currency.code}</TableCell>
+              <TableCell>{currency.symbol}</TableCell>
+              <TableCell>{currency.name}</TableCell>
+              <TableCell className="text-right">{/* Кнопки */}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
 }

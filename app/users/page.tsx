@@ -1,16 +1,67 @@
-import { prisma } from "@/lib/db";
-export default  async function Users() {
-    const users = await prisma.users.findMany();
+import { prisma } from "@/lib/db"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+
+export default async function Users() {
+  const users = await prisma.users.findMany()
   return (
-    <div>
-      <h1>Users</h1>
-      <div>
-        {users.map((user) => (
-          <div key={user.id}>
-            {user.username}
-          </div>
-        ))}
-      </div>
+    <div className="py-4 px-2">
+      <h1 className="text-2xl">Список пользователей</h1>
+      <Table className="w-fit">
+        <TableHeader className="bg-blue-300">
+          <TableRow>
+            <TableHead>Имя</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Роль</TableHead>
+            <TableHead>Статус</TableHead>
+            <TableHead className="text-right">Действия</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={7} className="text-center">
+                Нет данных
+              </TableCell>
+            </TableRow>
+          ) : (
+            users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.email || "-"}</TableCell>
+                <TableCell>
+                  {user.role === "admin" && (
+                    <Badge variant="outline">Админ</Badge>
+                  )}
+                  {user.role === "accountant" && (
+                    <Badge variant="outline">Бухгалтер</Badge>
+                  )}
+                  {user.role === "storekeeper" && (
+                    <Badge variant="outline">Кладовщик</Badge>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {user.is_active ? (
+                    <Badge variant="default">Активен</Badge>
+                  ) : (
+                    <Badge variant="destructive">Заблокирован</Badge>
+                  )}
+                </TableCell>
+                <TableCell className="text-right">
+                  {/* Кнопки редактирования/удаления */}
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
     </div>
-  );
+  )
 }
