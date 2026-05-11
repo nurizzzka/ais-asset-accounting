@@ -2,7 +2,8 @@ import { Geist, JetBrains_Mono } from "next/font/google"
 import Header from "@/components/ui/header"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+import { Toaster } from "sonner"
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -24,7 +25,10 @@ export default function RootLayout({
     >
       <body>
         <Header />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+          <Toaster richColors closeButton />
+        </ThemeProvider>
       </body>
     </html>
   )

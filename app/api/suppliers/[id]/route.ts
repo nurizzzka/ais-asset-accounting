@@ -36,17 +36,30 @@ export async function PUT(
   }
 
   const b = body as Record<string, unknown>;
+  const keys = Object.keys(b);
+
+  const existing = await prisma.suppliers.findUnique({ where: { id } });
+  if (!existing) {
+    return NextResponse.json({ error: "Поставщик не найден" }, { status: 404 });
+  }
+
+  if (keys.length === 1 && keys[0] === "is_active") {
+    const nextActive = b.is_active;
+    if (typeof nextActive === "boolean") {
+      const updated = await prisma.suppliers.update({
+        where: { id },
+        data: { is_active: nextActive },
+      });
+      return NextResponse.json(updated);
+    }
+  }
+
   const name = typeof b.name === "string" ? b.name.trim() : "";
   if (!name) {
     return NextResponse.json(
       { error: "Наименование обязательно" },
       { status: 400 },
     );
-  }
-
-  const existing = await prisma.suppliers.findUnique({ where: { id } });
-  if (!existing) {
-    return NextResponse.json({ error: "Поставщик не найден" }, { status: 404 });
   }
 
   const updated = await prisma.suppliers.update({
@@ -58,6 +71,7 @@ export async function PUT(
       address: optString(b.address),
       inn: optString(b.inn),
       notes: optString(b.notes),
+      ...(typeof b.is_active === "boolean" ? { is_active: b.is_active } : {}),
     },
   });
 

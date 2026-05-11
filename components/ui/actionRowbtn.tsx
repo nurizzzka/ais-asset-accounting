@@ -1,6 +1,6 @@
 "use client"
 
-import { Edit, Eye, MoreVertical, Trash2 } from "lucide-react"
+import { CircleCheck, Edit, Eye, MoreVertical, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -14,9 +14,11 @@ interface ActionRowBtnProps {
   onEdit?: () => void;
   onView?: () => void;
   onDelete?: () => void;
+  onActivate?: () => void;
+  is_active: boolean;
 }
 
-const ActionRowBtn = ({ onEdit, onView = () => {}, onDelete = () => {} }: ActionRowBtnProps) => {
+const ActionRowBtn = ({ onEdit, onView = () => {}, onDelete = () => {}, onActivate = () => {}, is_active }: ActionRowBtnProps) => {
   const handleEdit = () => {
     onEdit?.();
   }
@@ -25,6 +27,9 @@ const ActionRowBtn = ({ onEdit, onView = () => {}, onDelete = () => {} }: Action
   }
   const handleDelete = () => {
     onDelete?.();
+  }
+  const handleActivate = () => {
+    onActivate?.();
   }
   return (
     <DropdownMenu>
@@ -43,10 +48,17 @@ const ActionRowBtn = ({ onEdit, onView = () => {}, onDelete = () => {} }: Action
           Редактировать
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+        {is_active ? (
         <DropdownMenuItem variant="destructive" onClick={handleDelete}>
           <Trash2 />
           Удалить
         </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={handleActivate}>
+            <CircleCheck />
+            Активировать
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )
