@@ -17,7 +17,7 @@ export default async function Users() {
       <Table className="w-fit">
         <TableHeader className="bg-blue-300">
           <TableRow>
-            <TableHead>Имя</TableHead>
+          <TableHead>Имя</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Роль</TableHead>
             <TableHead>Статус</TableHead>

@@ -64,7 +64,10 @@ model suppliers {
   inn        String?    @db.VarChar(20)
   notes      String?
   created_at DateTime?  @default(now()) @db.Timestamp(6)
+  created_by Int?
+  is_active  Boolean    @default(true)
   products   products[]
+  users      users?     @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -79,6 +82,7 @@ model users {
   created_at    DateTime?   @default(now()) @db.Timestamp(6)
   updated_at    DateTime?   @default(now()) @db.Timestamp(6)
   receipts      receipts[]
+  suppliers     suppliers[]
   writeoffs     writeoffs[]
 }
 
