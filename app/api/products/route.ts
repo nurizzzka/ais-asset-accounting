@@ -38,6 +38,14 @@ function decimalString(v: unknown, fallback: string): string {
   return fallback;
 }
 
+function parseDateOnly(v: unknown): Date | null {
+  const s = optString(v);
+  if (!s) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (!m) return null;
+  return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+}
+
 export async function POST(request: Request) {
   let body: unknown;
   try {
@@ -73,6 +81,17 @@ export async function POST(request: Request) {
   const purchaseOriginal = decimalString(b.purchase_price_original, priceKgs);
   const exchangeRate = decimalString(b.exchange_rate_at_purchase, "1");
 
+  let receiptDocumentNumber: string | null = null;
+  let receiptDate: Date | null = null;
+  let receiptNotes: string | null = null;
+  const rawIr = b.initial_receipt;
+  if (rawIr != null && typeof rawIr === "object" && !Array.isArray(rawIr)) {
+    const ir = rawIr as Record<string, unknown>;
+    receiptDocumentNumber = optString(ir.document_number);
+    receiptDate = parseDateOnly(ir.receipt_date);
+    receiptNotes = optString(ir.notes);
+  }
+
   const createdBy = await getCurrentUser();
 
   try {
@@ -94,6 +113,7 @@ export async function POST(request: Request) {
       });
 
       if (quantity > 0) {
+        const defaultNote = "Первичное поступление при создании карточки";
         await tx.receipts.create({
           data: {
             product_id: p.id,
@@ -101,8 +121,10 @@ export async function POST(request: Request) {
             price_original: purchaseOriginal,
             currency_code: purchaseCurrency,
             exchange_rate: exchangeRate,
+            document_number: receiptDocumentNumber,
+            receipt_date: receiptDate,
+            notes: receiptNotes ?? defaultNote,
             created_by: createdBy,
-            notes: "Первичное поступление при создании карточки",
           },
         });
       }
