@@ -88,26 +88,28 @@ model users {
 }
 
 model writeoff_reasons {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique @db.VarChar(100)
+  id          Int         @id @default(autoincrement())
+  name        String      @unique @db.VarChar(100)
   description String?
-  is_active   Boolean? @default(true)
+  is_active   Boolean?    @default(true)
+  writeoffs   writeoffs[]
 }
 
 model writeoffs {
-  id                Int       @id @default(autoincrement())
-  product_id        Int
-  quantity          Int
-  reason_id         Int?
-  reason_text       String?
-  price_at_writeoff Decimal   @db.Decimal(12, 2)
-  currency_code     String    @db.VarChar(3)
-  total_amount      Decimal?  @db.Decimal(15, 2)
-  document_number   String?   @db.VarChar(50)
-  writeoff_date     DateTime? @db.Date
-  created_by        Int?
-  notes             String?
-  created_at        DateTime? @db.Timestamp(6)
-  users             users?    @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by_fkey")
-  products          products  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id_fkey")
+  id                 Int               @id @default(autoincrement())
+  product_id         Int
+  quantity           Int
+  reason_id          Int?
+  reason_text        String?
+  price_at_writeoff  Decimal           @db.Decimal(12, 2)
+  currency_code      String            @db.VarChar(3)
+  total_amount       Decimal?          @db.Decimal(15, 2)
+  document_number    String?           @db.VarChar(50)
+  writeoff_date      DateTime?         @db.Date
+  created_by         Int?
+  notes              String?
+  created_at         DateTime?         @db.Timestamp(6)
+  users    users?            @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by_fkey")
+  products products          @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id_fkey")
+  reason   writeoff_reasons? @relation(fields: [reason_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
 }

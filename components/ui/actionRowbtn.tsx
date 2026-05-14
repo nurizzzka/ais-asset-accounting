@@ -16,9 +16,18 @@ interface ActionRowBtnProps {
   onDelete?: () => void;
   onActivate?: () => void;
   is_active: boolean;
+  /** Если false, при неактивной строке пункт «Активировать» не показывается (например, товар без остатка). */
+  showInactiveActivate?: boolean;
 }
 
-const ActionRowBtn = ({ onEdit, onView = () => {}, onDelete = () => {}, onActivate = () => {}, is_active }: ActionRowBtnProps) => {
+const ActionRowBtn = ({
+  onEdit,
+  onView = () => {},
+  onDelete = () => {},
+  onActivate = () => {},
+  is_active,
+  showInactiveActivate = true,
+}: ActionRowBtnProps) => {
   const handleEdit = () => {
     onEdit?.();
   }
@@ -47,18 +56,18 @@ const ActionRowBtn = ({ onEdit, onView = () => {}, onDelete = () => {}, onActiva
           <Edit />
           Редактировать
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        {(is_active || showInactiveActivate) && <DropdownMenuSeparator />}
         {is_active ? (
-        <DropdownMenuItem variant="destructive" onClick={handleDelete}>
-          <Trash2 />
-          Удалить
-        </DropdownMenuItem>
-        ) : (
+          <DropdownMenuItem variant="destructive" onClick={handleDelete}>
+            <Trash2 />
+            Удалить
+          </DropdownMenuItem>
+        ) : showInactiveActivate ? (
           <DropdownMenuItem onClick={handleActivate}>
             <CircleCheck />
             Активировать
           </DropdownMenuItem>
-        )}
+        ) : null}
       </DropdownMenuContent>
     </DropdownMenu>
   )
