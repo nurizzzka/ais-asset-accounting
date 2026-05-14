@@ -87,10 +87,7 @@ export default async function WriteOffsPage() {
               <TableHead>Вал.</TableHead>
               <TableHead className="text-right">Сумма</TableHead>
               <TableHead>Причина (справочник)</TableHead>
-              <TableHead>Текст причины</TableHead>
               <TableHead>Документ</TableHead>
-              <TableHead>Дата</TableHead>
-              <TableHead>Примечание</TableHead>
               <TableHead>Создал</TableHead>
               <TableHead>Создано</TableHead>
               <TableHead className="text-right">Действия</TableHead>
@@ -99,7 +96,7 @@ export default async function WriteOffsPage() {
           <TableBody>
             {rows.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={16} className="text-center">
+                <TableCell colSpan={13} className="text-center">
                   Нет данных
                 </TableCell>
               </TableRow>

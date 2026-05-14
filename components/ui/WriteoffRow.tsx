@@ -78,14 +78,7 @@ export function WriteoffRow({ row }: { row: WriteoffRowModel }) {
         <TableCell className="max-w-[160px] truncate" title={reasonBlock}>
           {reasonBlock}
         </TableCell>
-        <TableCell className="max-w-[120px] truncate" title={row.reason_text ?? ""}>
-          {row.reason_text || "—"}
-        </TableCell>
         <TableCell className="whitespace-nowrap">{row.document_number || "—"}</TableCell>
-        <TableCell className="whitespace-nowrap">{row.writeoff_date_label || "—"}</TableCell>
-        <TableCell className="max-w-[140px] truncate" title={row.notes ?? ""}>
-          {row.notes || "—"}
-        </TableCell>
         <TableCell className="whitespace-nowrap">{row.created_by_label || "—"}</TableCell>
         <TableCell className="whitespace-nowrap text-muted-foreground text-xs">
           {row.created_at_label || "—"}
