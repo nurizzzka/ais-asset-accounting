@@ -9,11 +9,12 @@ datasource db {
 }
 
 model currencies {
-  id      Int      @id @default(autoincrement())
-  code    String   @unique @db.VarChar(3)
-  symbol  String   @db.VarChar(5)
-  name    String   @db.VarChar(50)
-  is_base Boolean? @default(false)
+  id        Int      @id @default(autoincrement())
+  code      String   @unique @db.VarChar(3)
+  symbol    String   @db.VarChar(5)
+  name      String   @db.VarChar(50)
+  is_base   Boolean? @default(false)
+  is_active Boolean  @default(true)
 }
 
 model products {
